@@ -64,6 +64,11 @@
                 <type>test-jar</type>
                 <version>${cas.version}</version>
             </dependency>
+            <dependency>
+            	<groupId>org.jasig.cas</groupId>
+            	<artifactId>cas-server-support-ldap</artifactId>
+            	<version>${cas.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -94,7 +99,7 @@
 		<module>cas-overlay-management-demo</module>
 	</modules>
 	<properties>
-		<cas.version>4.0.0-RC4-SNAPSHOT</cas.version>
+		<cas.version>4.0.0-RC5-SNAPSHOT</cas.version>
 	</properties>
 </project>
 
