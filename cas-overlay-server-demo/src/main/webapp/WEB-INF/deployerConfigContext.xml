@@ -42,7 +42,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-	<bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager" p:authenticationPolicy-ref="authenticationPolicy">
+	<bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
 		<constructor-arg>
 			<map>
 				<entry key-ref="ldapAuthenticationHandler" value-ref="ldapPrincipalResolver" />
@@ -51,9 +51,10 @@
 		<property name="authenticationMetaDataPopulators">
 			<bean class="org.jasig.cas.authentication.SuccessfulHandlerMetaDataPopulator" />
 		</property>
+		<property name="authenticationPolicy">
+			<bean class="org.jasig.cas.authentication.AnyAuthenticationPolicy" />
+		</property>
 	</bean>
-
-
 
 
 
@@ -74,41 +75,23 @@
 	</bean>
 
 	<bean id="authenticator" class="org.ldaptive.auth.Authenticator" c:resolver-ref="dnResolver" c:handler-ref="authHandler" />
-	<bean id="dnResolver" class="org.ldaptive.auth.PooledSearchDnResolver" 
-		p:baseDn="${ldap.baseDn}" 
-		p:allowMultipleDns="false" 
-		p:connectionFactory-ref="searchPooledLdapConnectionFactory"
+	<bean id="dnResolver" class="org.ldaptive.auth.PooledSearchDnResolver" p:baseDn="${ldap.baseDn}" p:allowMultipleDns="false" p:connectionFactory-ref="searchPooledLdapConnectionFactory"
 		p:userFilter="${ldap.authn.searchFilter}" />
-	<bean id="searchPooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory" 
-		p:connectionPool-ref="searchConnectionPool" />
-	<bean id="searchConnectionPool" parent="abstractConnectionPool" 
-		p:connectionFactory-ref="searchConnectionFactory" />
-	<bean id="searchConnectionFactory" class="org.ldaptive.DefaultConnectionFactory" 
-		p:connectionConfig-ref="searchConnectionConfig" />
-	<bean id="searchConnectionConfig" parent="abstractConnectionConfig" 
-		p:connectionInitializer-ref="bindConnectionInitializer" />
-	<bean id="bindConnectionInitializer" class="org.ldaptive.BindConnectionInitializer" 
-		p:bindDn="${ldap.managerDn}">
+	<bean id="searchPooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory" p:connectionPool-ref="searchConnectionPool" />
+	<bean id="searchConnectionPool" parent="abstractConnectionPool" p:connectionFactory-ref="searchConnectionFactory" />
+	<bean id="searchConnectionFactory" class="org.ldaptive.DefaultConnectionFactory" p:connectionConfig-ref="searchConnectionConfig" />
+	<bean id="searchConnectionConfig" parent="abstractConnectionConfig" p:connectionInitializer-ref="bindConnectionInitializer" />
+	<bean id="bindConnectionInitializer" class="org.ldaptive.BindConnectionInitializer" p:bindDn="${ldap.managerDn}">
 		<property name="bindCredential">
 			<bean class="org.ldaptive.Credential" c:password="${ldap.managerPassword}" />
 		</property>
 	</bean>
-	<bean id="abstractConnectionPool" abstract="true" class="org.ldaptive.pool.BlockingConnectionPool" init-method="initialize" 
-		p:poolConfig-ref="ldapPoolConfig"
-		p:blockWaitTime="${ldap.pool.blockWaitTime}" 
-		p:validator-ref="searchValidator" 
-		p:pruneStrategy-ref="pruneStrategy" />
-	<bean id="abstractConnectionConfig" abstract="true" class="org.ldaptive.ConnectionConfig" 
-		p:ldapUrl="${ldap.url}" 
-		p:connectTimeout="${ldap.connectTimeout}"
-		p:useStartTLS="${ldap.useStartTLS}" 
-		p:sslConfig-ref="sslConfig" />
-	<bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig" 
-		p:minPoolSize="${ldap.pool.minSize}" 
-		p:maxPoolSize="${ldap.pool.maxSize}"
-		p:validateOnCheckOut="${ldap.pool.validateOnCheckout}" 
-		p:validatePeriodically="${ldap.pool.validatePeriodically}" 
-		p:validatePeriod="${ldap.pool.validatePeriod}" />
+	<bean id="abstractConnectionPool" abstract="true" class="org.ldaptive.pool.BlockingConnectionPool" init-method="initialize" p:poolConfig-ref="ldapPoolConfig"
+		p:blockWaitTime="${ldap.pool.blockWaitTime}" p:validator-ref="searchValidator" p:pruneStrategy-ref="pruneStrategy" />
+	<bean id="abstractConnectionConfig" abstract="true" class="org.ldaptive.ConnectionConfig" p:ldapUrl="${ldap.url}" p:connectTimeout="${ldap.connectTimeout}"
+		p:useStartTLS="${ldap.useStartTLS}" p:sslConfig-ref="sslConfig" />
+	<bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig" p:minPoolSize="${ldap.pool.minSize}" p:maxPoolSize="${ldap.pool.maxSize}"
+		p:validateOnCheckOut="${ldap.pool.validateOnCheckout}" p:validatePeriodically="${ldap.pool.validatePeriodically}" p:validatePeriod="${ldap.pool.validatePeriod}" />
 	<bean id="sslConfig" class="org.ldaptive.ssl.SslConfig">
 		<property name="credentialConfig">
 			<bean class="org.ldaptive.ssl.X509CredentialConfig" p:trustCertificates="${ldap.trustedCert}" />
@@ -126,6 +109,13 @@
 
 
 
+	<!--
+		| Resolves a principal from a credential using an attribute repository that is configured to resolve
+		| against a deployer-specific store (e.g. LDAP).
+	-->
+	<bean id="ldapPrincipalResolver" class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver">
+		<property name="attributeRepository" ref="attributeRepository" />
+	</bean>
 
 	<!--
 		Bean that defines the attributes that a service may return. This example uses the Stub/Mock version. A real implementation
@@ -163,13 +153,13 @@
 			<property name="serviceId" value="^https?://back.*" />
 			<property name="evaluationOrder" value="10000002" />
 		</bean>
-		<bean class="org.jasig.cas.services.RegexRegisteredService">
-			<property name="id" value="2" />
-			<property name="name" value="localhost" />
-			<property name="description" value="Allows only localhost services" />
-			<property name="serviceId" value="^https?://localhost.*" />
-			<property name="evaluationOrder" value="10000003" />
-		</bean>
+		<!-- <bean class="org.jasig.cas.services.RegexRegisteredService"> -->
+		<!-- <property name="id" value="2" /> -->
+		<!-- <property name="name" value="localhost" /> -->
+		<!-- <property name="description" value="Allows only localhost services" /> -->
+		<!-- <property name="serviceId" value="^https?://localhost.*" /> -->
+		<!-- <property name="evaluationOrder" value="10000003" /> -->
+		<!-- </bean> -->
 		<!--
 			Use the following definition instead of the above to further restrict access
 			to services within your domain (including sub domains).
@@ -177,18 +167,17 @@
 			This example also demonstrates the configuration of an attribute filter
 			that only allows for attributes whose length is 3.
 		-->
-		<!--
-			<bean class="org.jasig.cas.services.RegexRegisteredService">
-			<property name="id" value="1" />
-			<property name="name" value="HTTP and IMAP on example.com" />
-			<property name="description" value="Allows HTTP(S) and IMAP(S) protocols on example.com" />
-			<property name="serviceId" value="^(https?|imaps?)://([A-Za-z0-9_-]+\.)*example\.com/.*" />
-			<property name="evaluationOrder" value="0" />
+		<bean class="org.jasig.cas.services.RegexRegisteredService">
+			<property name="id" value="2" />
+			<property name="name" value="HTTP and IMAP on zeiv.dsmynas.com" />
+			<property name="description" value="Allows HTTP(S) and IMAP(S) protocols on zeiv.dsmynas.com" />
+			<property name="serviceId" value="^(https?|imaps?)://([A-Za-z0-9_-]+\.)*zeiv\.dsmynas\.com/.*" />
+<!-- 			<property name="evaluationOrder" value="0" /> -->
 			<property name="attributeFilter">
-			<bean class="org.jasig.cas.services.support.RegisteredServiceRegexAttributeFilter" c:regex="^\w{3}$" />
+				<bean class="org.jasig.cas.services.support.RegisteredServiceRegexAttributeFilter" c:regex="^\w{3}$" />
 			</property>
-			</bean>
-		-->
+			<property name="evaluationOrder" value="10000003" />
+		</bean>
 	</util:list>
 
 	<bean id="auditTrailManager" class="com.github.inspektr.audit.support.Slf4jLoggingAuditTrailManager" />
