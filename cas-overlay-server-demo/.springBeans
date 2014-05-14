@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.5.0.201404011509-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/webapp/WEB-INF/deployerConfigContext.xml</config>
+		<config>src/main/webapp/WEB-INF/cas-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/propertyFileConfigurer.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/ticketExpirationPolicies.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/ticketGrantingTicketCookieGenerator.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/ticketRegistry.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+		<configSet>
+			<name><![CDATA[CAS Beans Config Set]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/webapp/WEB-INF/cas-servlet.xml</config>
+				<config>src/main/webapp/WEB-INF/deployerConfigContext.xml</config>
+				<config>src/main/webapp/WEB-INF/spring-configuration/propertyFileConfigurer.xml</config>
+				<config>src/main/webapp/WEB-INF/spring-configuration/ticketExpirationPolicies.xml</config>
+				<config>src/main/webapp/WEB-INF/spring-configuration/ticketGrantingTicketCookieGenerator.xml</config>
+				<config>src/main/webapp/WEB-INF/spring-configuration/ticketRegistry.xml</config>
+				<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
+			</configs>
+			<profiles>
+			</profiles>
+		</configSet>
+	</configSets>
+</beansProjectDescription>

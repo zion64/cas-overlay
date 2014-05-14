@@ -39,7 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
-			<artifactId>cas-server-extension-clearpass</artifactId>
+			<artifactId>cas-server-support-ldap</artifactId>
 			<version>4.0.0</version>
 		</dependency>
 	</dependencies>
