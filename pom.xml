@@ -69,6 +69,11 @@
             	<artifactId>cas-server-support-ldap</artifactId>
             	<version>${cas.version}</version>
             </dependency>
+            <dependency>
+            	<groupId>org.jasig.cas</groupId>
+            	<artifactId>cas-server-webapp-support</artifactId>
+            	<version>${cas.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
