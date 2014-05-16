@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow-project-description>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.5.0.201404011509-RELEASE]]></pluginVersion>
+	<configs>
+		<config>
+			<file>src/main/webapp/WEB-INF/login-webflow.xml</file>
+			<name><![CDATA[login-webflow]]></name>
+		</config>
+		<config>
+			<file>src/main/webapp/WEB-INF/logout-webflow.xml</file>
+			<name><![CDATA[logout-webflow]]></name>
+		</config>
+	</configs>
+</webflow-project-description>

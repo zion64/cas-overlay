@@ -46,15 +46,12 @@
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<!-- *********************************************************************************************************************** -->
-	<!-- authenticationManager 빈 설정하기 시작 -->
 	<!--
 		| The authentication manager defines security policy for authentication by specifying at a minimum
 		| the authentication handlers that will be used to authenticate credential. While the AuthenticationManager
 		| interface supports plugging in another implementation, the default PolicyBasedAuthenticationManager should
 		| be sufficient in most cases.
 	-->
-	<!-- *********************************************************************************************************************** -->
 	<bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
 		<constructor-arg>
 			<map>
@@ -64,7 +61,7 @@
 					| If more than one instance of the same handler class is configured, you must explicitly
 					| set its name to something other than its default name (typically the simple class name).
 				-->
-				<entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
+<!-- 				<entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" /> -->
 				<entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
 			</map>
 		</constructor-arg>
@@ -91,24 +88,10 @@
 	</bean>
 
 
-	<!-- ****************************************************************** -->
-	<!-- proxyAuthenticationHandler와 proxyPrincipalResolver 빈 설정하기 시작    -->
-	<!-- ****************************************************************** -->
-	<bean id="proxyAuthenticationHandler" class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
-		p:httpClient-ref="httpClient" 
-		p:requireSecure="false" />
-	<bean id="proxyPrincipalResolver" class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
-	<!-- ****************************************************************** -->
-	<!-- proxyAuthenticationHandler와 proxyPrincipalResolver 빈 설정하기 끝 -->
-	<!-- ****************************************************************** -->
-
-
-	<!-- ****************************************************************** -->
-	<!-- primaryAuthenticationHandler와 primaryPrincipalResolver 빈 설정하기 시작 -->
-	<!-- ****************************************************************** -->
-	<!-- *************************************** -->
-	<!-- primaryAuthenticationHandler 빈을 설정하기 시작 -->
-	<!-- *************************************** -->
+<!-- 	<bean id="proxyAuthenticationHandler" class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler" -->
+<!-- 		p:httpClient-ref="httpClient"  -->
+<!-- 		p:requireSecure="false" /> -->
+<!-- 	<bean id="proxyPrincipalResolver" class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" /> -->
 	<!--
 		| TODO: Replace this component with one suitable for your enviroment.
 		|
@@ -145,7 +128,8 @@
 	      p:baseDn="${ldap.baseDn}"
 	      p:allowMultipleDns="false"
 	      p:connectionFactory-ref="searchPooledLdapConnectionFactory"
-	      p:userFilter="${ldap.authn.searchFilter}" />
+	      p:userFilter="${ldap.authn.searchFilter}" 
+	      p:subtreeSearch="true" />
 	<bean id="searchPooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory"
 	      p:connectionPool-ref="searchConnectionPool" />
 	<bean id="searchConnectionPool" parent="abstractConnectionPool"
@@ -155,13 +139,13 @@
 	
 	<bean id="searchConnectionConfig" parent="abstractConnectionConfig"
 	      p:connectionInitializer-ref="bindConnectionInitializer" />
-	<bean id="bindConnectionInitializer" class="org.ldaptive.BindConnectionInitializer"
-	      p:bindDn="${ldap.managerDn}">
-	    <property name="bindCredential">
-	        <bean class="org.ldaptive.Credential"
-	              c:password="${ldap.managerPassword}" />
-	    </property>
-	</bean>
+<!-- 	<bean id="bindConnectionInitializer" class="org.ldaptive.BindConnectionInitializer" -->
+<!-- 	      p:bindDn="${ldap.managerDn}"> -->
+<!-- 	    <property name="bindCredential"> -->
+<!-- 	        <bean class="org.ldaptive.Credential" -->
+<!-- 	              c:password="${ldap.managerPassword}" /> -->
+<!-- 	    </property> -->
+<!-- 	</bean> -->
 	<bean id="abstractConnectionPool" abstract="true" class="org.ldaptive.pool.BlockingConnectionPool"
 	      init-method="initialize"
 	      p:poolConfig-ref="ldapPoolConfig"
@@ -173,22 +157,22 @@
 	      p:connectTimeout="${ldap.connectTimeout}"
 	      p:useStartTLS="${ldap.useStartTLS}"
 	      p:sslConfig-ref="sslConfig" />
-	<bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig"
-	      p:minPoolSize="${ldap.pool.minSize}"
-	      p:maxPoolSize="${ldap.pool.maxSize}"
-	      p:validateOnCheckOut="${ldap.pool.validateOnCheckout}"
-	      p:validatePeriodically="${ldap.pool.validatePeriodically}"
-	      p:validatePeriod="${ldap.pool.validatePeriod}" />
-	<bean id="sslConfig" class="org.ldaptive.ssl.SslConfig">
-	    <property name="credentialConfig">
-	        <bean class="org.ldaptive.ssl.X509CredentialConfig"
-	              p:trustCertificates="${ldap.trustedCert}" />
-	    </property>
-	</bean>
-	<bean id="pruneStrategy" class="org.ldaptive.pool.IdlePruneStrategy"
-	      p:prunePeriod="${ldap.pool.prunePeriod}"
-	      p:idleTime="${ldap.pool.idleTime}" />
-	<bean id="searchValidator" class="org.ldaptive.pool.SearchValidator" />
+<!-- 	<bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig" -->
+<!-- 	      p:minPoolSize="${ldap.pool.minSize}" -->
+<!-- 	      p:maxPoolSize="${ldap.pool.maxSize}" -->
+<!-- 	      p:validateOnCheckOut="${ldap.pool.validateOnCheckout}" -->
+<!-- 	      p:validatePeriodically="${ldap.pool.validatePeriodically}" -->
+<!-- 	      p:validatePeriod="${ldap.pool.validatePeriod}" /> -->
+<!-- 	<bean id="sslConfig" class="org.ldaptive.ssl.SslConfig"> -->
+<!-- 	    <property name="credentialConfig"> -->
+<!-- 	        <bean class="org.ldaptive.ssl.X509CredentialConfig" -->
+<!-- 	              p:trustCertificates="${ldap.trustedCert}" /> -->
+<!-- 	    </property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="pruneStrategy" class="org.ldaptive.pool.IdlePruneStrategy" -->
+<!-- 	      p:prunePeriod="${ldap.pool.prunePeriod}" -->
+<!-- 	      p:idleTime="${ldap.pool.idleTime}" /> -->
+<!-- 	<bean id="searchValidator" class="org.ldaptive.pool.SearchValidator" /> -->
 	<bean id="authHandler" class="org.ldaptive.auth.PooledBindAuthenticationHandler"
 	      p:connectionFactory-ref="bindPooledLdapConnectionFactory" />
 	<bean id="bindPooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory"
@@ -199,13 +183,6 @@
 	      p:connectionConfig-ref="bindConnectionConfig" />
 	<bean id="bindConnectionConfig" parent="abstractConnectionConfig" />	
 	
-	<!-- *************************************** -->
-	<!-- primaryAuthenticationHandler 빈을 설정하기 끝 -->
-	<!-- *************************************** -->
-
-	<!-- *************************************** -->
-	<!-- primaryPrincipalResolver 빈을 설정하기 시작 -->
-	<!-- *************************************** -->
     <bean id="primaryPrincipalResolver" class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver" 
     	p:attributeRepository-ref="attributeRepository"/>
     <!--
@@ -219,34 +196,46 @@
         <entry key="eduPersonAffiliation" value="eduPersonAffiliation" /> 
         <entry key="groupMembership" value="groupMembership" />
     </util:map>
-	<!-- *************************************** -->
-	<!-- primaryPrincipalResolver 빈을 설정하기 끝  -->
-	<!-- *************************************** -->
-	<!-- ****************************************************************** -->
-	<!-- primaryAuthenticationHandler와 primaryPrincipalResolver 빈 설정하기 끝 -->
-	<!-- ****************************************************************** -->
-	
-	<!-- *********************************************************************************************************************** -->
-	<!-- authenticationManager 빈 설정하기 끝 -->
-	<!-- *********************************************************************************************************************** -->
 
 
 
-	<!-- *********************************************************************************************************************** -->
-	<!-- serviceRegistryDao 빈을 설정하기 시작 : LDAP에서 서비스를 관리하도록 설정하였음 -->
-	<!-- *********************************************************************************************************************** -->
-    <bean id="serviceRegistryDao" class="org.jasig.cas.adaptors.ldap.services.LdapServiceRegistryDao"
+
+
+
+
+<!-- 	<bean -->
+<!-- 		id="serviceRegistryDao" -->
+<!--         class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"> -->
+<!--             <property name="registeredServices"> -->
+<!--                 <util:list> -->
+<!--                     <bean class="org.jasig.cas.services.RegexRegisteredService" -->
+<!--                           p:id="0" p:name="HTTP and IMAP" p:description="Allows HTTP(S) and IMAP(S) protocols" -->
+<!--                           p:serviceId="^(https?|imaps?)://.*" p:evaluationOrder="10000001" /> -->
+<!--                 </util:list> -->
+<!--             </property> -->
+<!--     </bean> -->
+
+    <bean id="serviceRegistryDao" class="org.jasig.cas.adaptors.ldap.services.LdapServiceRegistryDao" init-method="init"
           p:connectionFactory-ref="pooledLdapConnectionFactory"
           p:searchRequest-ref="searchRequest" />
 
     <bean id="searchRequest" class="org.ldaptive.SearchRequest"
           p:baseDn="${ldap.service.baseDn}" />
 
+
+
+
+
+
+
+
+
+
+
     <bean id="pooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory"
           p:connectionPool-ref="connectionPool" />
 
-    <bean id="connectionPool" class="org.ldaptive.pool.BlockingConnectionPool"
-          init-method="initialize"
+    <bean id="connectionPool" class="org.ldaptive.pool.BlockingConnectionPool" init-method="initialize"
           p:poolConfig-ref="ldapPoolConfig"
           p:blockWaitTime="${ldap.pool.blockWaitTime}"
           p:validator-ref="searchValidator"
@@ -278,14 +267,6 @@
         </property>
     </bean>
 
-	<!-- *********************************************************************************************************************** -->
-	<!-- serviceRegistryDao 빈을 설정하기 끝 -->
-	<!-- *********************************************************************************************************************** -->
-
-	<!-- *********************************************************************************************************************** -->
-	<!-- 공통 빈 설정하기 시작 -->
-	<!-- *********************************************************************************************************************** -->
-
     <bean id="sslConfig" class="org.ldaptive.ssl.SslConfig">
         <property name="credentialConfig">
             <bean class="org.ldaptive.ssl.X509CredentialConfig"
@@ -300,14 +281,6 @@
           p:corePoolSize="1"
           p:maxPoolSize="1"
           p:keepAliveSeconds="1" />
-
-	<!-- *********************************************************************************************************************** -->
-	<!-- 공통 빈 설정하기 끝 -->
-	<!-- *********************************************************************************************************************** -->
-
-	<!-- *********************************************************************************************************************** -->
-	<!-- 기타 필요한 빈 설정하기 시작 -->
-	<!-- *********************************************************************************************************************** -->
 
 	<bean id="auditTrailManager" class="com.github.inspektr.audit.support.Slf4jLoggingAuditTrailManager" />
 
@@ -329,7 +302,4 @@
 			p:serviceTicketCountWarnThreshold="5000"
 			p:sessionCountWarnThreshold="100000" />
 	</util:list>
-	<!-- *********************************************************************************************************************** -->
-	<!-- 기타 필요한 빈 설정하기 시작 -->
-	<!-- *********************************************************************************************************************** -->
 </beans>
