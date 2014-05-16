@@ -114,6 +114,7 @@
 	               | Keys are LDAP attribute names, values are CAS attribute names.
 	               | Use this facility instead of a PrincipalResolver if LDAP is
 	               | the only attribute source.
+	               | 이거 이해 못하겠음. 다시 한번 확인
 	               -->
 	            <entry key="member" value="member" />
 	            <entry key="mail" value="mail" />
@@ -121,6 +122,7 @@
 	        </map>
 		</property>
 	</bean>
+	
 	<bean id="authenticator" class="org.ldaptive.auth.Authenticator"
 		c:resolver-ref="dnResolver"
 		c:handler-ref="authHandler" />
