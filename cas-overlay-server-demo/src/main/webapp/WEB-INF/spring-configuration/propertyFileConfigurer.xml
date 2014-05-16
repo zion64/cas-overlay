@@ -32,5 +32,5 @@
 		can be moved between tiers without modification.
 	</description>
     
-    <context:property-placeholder location="/WEB-INF/cas.properties,/WEB-INF/ldap.properties"/> 
+    <context:property-placeholder file-encoding="UTF-8" location="/WEB-INF/cas.properties,/WEB-INF/ldap.properties"/> 
 </beans>
