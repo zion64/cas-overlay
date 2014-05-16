@@ -41,9 +41,9 @@
 
   <!-- Theme Resolver -->
   <bean id="themeResolver" class="org.jasig.cas.services.web.ServiceThemeResolver"
-        p:defaultThemeName="${cas.themeResolver.defaultThemeName:cas-theme-default}"
-        p:argumentExtractors-ref="argumentExtractors"
-        p:servicesManager-ref="servicesManager">
+		p:defaultThemeName="${cas.themeResolver.defaultThemeName:cas-theme-default}"
+		p:argumentExtractors-ref="argumentExtractors"
+		p:servicesManager-ref="servicesManager">
     <property name="mobileBrowsers">
       <util:map>
         <entry key=".*iPhone.*" value="iphone"/>
@@ -56,7 +56,7 @@
 
   <!-- View Resolver -->
   <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver"
-        p:order="0">
+		p:order="0">
     <property name="basenames">
       <util:list>
         <value>${cas.viewResolver.basename:default_views}</value>
