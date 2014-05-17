@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:directive.include file="includes/top.jsp" />
 
 <%@ page import="org.jasig.cas.web.support.WebUtils"%>

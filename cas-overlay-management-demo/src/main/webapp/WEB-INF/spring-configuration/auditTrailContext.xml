@@ -39,8 +39,10 @@
   <aop:aspectj-autoproxy/> 
 
  <bean id="auditTrailManagementAspect" class="com.github.inspektr.audit.AuditTrailManagementAspect"
-    c:applicationCode="CAS_Management" c:auditablePrincipalResolver-ref="auditablePrincipalResolver" 
-    c:auditTrailManagers-ref="auditTrailManager" c:auditActionResolverMap-ref="auditActionResolverMap"
+    c:applicationCode="CAS_Management" 
+    c:auditablePrincipalResolver-ref="auditablePrincipalResolver" 
+    c:auditTrailManagers-ref="auditTrailManager" 
+    c:auditActionResolverMap-ref="auditActionResolverMap"
     c:auditResourceResolverMap-ref="auditResourceResolverMap" />
     
     <util:map id="auditActionResolverMap">
@@ -66,10 +68,12 @@
     <bean id="deleteServiceResourceResolver" class="org.jasig.cas.audit.spi.ServiceManagementResourceResolver" />
 
     <bean id="saveServiceActionResolver" class="com.github.inspektr.audit.spi.support.DefaultAuditActionResolver"
-          c:successSuffix="_SUCCESS" c:failureSuffix="_FAILED" />
+		c:successSuffix="_SUCCESS" 
+		c:failureSuffix="_FAILED" />
 
     <bean id="deleteServiceActionResolver" class="com.github.inspektr.audit.spi.support.ObjectCreationAuditActionResolver"
-          c:successSuffix="_SUCCESS" c:failureSuffix="_FAILED" />
+		c:successSuffix="_SUCCESS" 
+		c:failureSuffix="_FAILED" />
 
     <bean id="auditablePrincipalResolver" class="com.github.inspektr.audit.spi.support.SpringSecurityAuditablePrincipalResolver" />
 </beans>

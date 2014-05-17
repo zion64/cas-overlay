@@ -55,8 +55,8 @@
 <!-- 	</sec:user-service> -->
 
 
-	<import resource="attributeRepositoryConfigContext.xml"/>
-	<import resource="serviceRegistryDaoConfigContext.xml"/>
+	<import resource="ConfigContext-attributeRepository.xml"/>
+	<import resource="ConfigContext-serviceRegistryDao.xml"/>
 	
 	
 

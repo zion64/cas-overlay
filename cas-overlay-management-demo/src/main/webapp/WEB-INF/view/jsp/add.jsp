@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="includes/top.jsp"%>
 <h1><spring:message code="${pageTitle}" /></h1>
 <form:form action="${registeredService.id ge 0 ? 'edit.html' : 'add.html'}?id=${fn:escapeXml(param.id)}" cssClass="v" cssStyle="width:75%;" commandName="${commandName}">

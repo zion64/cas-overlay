@@ -25,6 +25,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="characterEncodingFilter" class="org.springframework.web.filter.CharacterEncodingFilter"
-            p:encoding="UTF-8"
-            p:forceEncoding="true" />
+		p:encoding="UTF-8"
+		p:forceEncoding="true" />
 </beans>
