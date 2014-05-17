@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- <bean id="attributeRepository" class="org.jasig.services.persondir.support.StubPersonAttributeDao"
+		p:backingMap-ref="attrRepoBackingMap" />
+		<util:map id="attrRepoBackingMap">
+		<entry key="uid" value="uid" />
+		<entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
+		<entry key="groupMembership" value="groupMembership" />
+		</util:map>
+	-->
+
+	<bean id="attributeRepository" class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
+		<property name="baseDN" value="${ldap.baseDn}" />
+		<property name="contextSource" ref="contextSource" />
+		<property name="queryAttributeMapping">
+			<map>
+<!-- 				<entry key="displayName" value="displayName" /> -->
+<!-- 				<entry key="givenName" value="givenName" /> -->
+<!-- 				<entry key="mail" value="mail" /> -->
+<!-- 				<entry key="sn" value="sn" /> -->
+				<entry key="username" value="uid" />
+			</map>
+		</property>
+<!-- 		<property name="queryTemplate" value="(&{0}(uid=*))" /> -->
+		<property name="requireAllQueryAttributes" value="true" />
+		<property name="resultAttributeMapping">
+			<map>
+				<!--
+					key 	: LDAP entry attribute
+					value 	: Principal member attribute
+				-->
+				<entry key="cn" value="cn" />
+				<entry key="displayName" value="displayName" />
+				<entry key="givenName" value="givenName" />
+				<entry key="mail" value="mail" />
+				<entry key="postalAddress" value="postalAddress" />
+				<entry key="postalCode" value="postalCode" />
+				<entry key="sn" value="sn" />
+				<entry key="telephoneNumber" value="telephoneNumber" />
+				<entry key="uid">
+					<set>
+						<value>uid</value>
+						<value>username</value>
+						<value>user.login.id</value>
+					</set>
+				</entry>
+			</map>
+		</property>
+		<property name="searchControls" ref="searchControls" />
+<!-- 		<property name="unmappedUsernameAttribute"></property> -->
+<!-- 		<property name="useAllQueryAttributes"></property> -->
+<!-- 		<property name="usernameAttributeProvider" ref="usernameAttributeProvider" /> -->
+	</bean>
+
+	<bean id="searchControls" class="javax.naming.directory.SearchControls">
+		<property name="countLimit" value="100" />
+		<property name="searchScope">
+			<util:constant static-field="javax.naming.directory.SearchControls.SUBTREE_SCOPE" />
+		</property>
+		<property name="timeLimit" value="5000" />
+		<property name="returningObjFlag" value="false" />
+	</bean>
+
+	<bean id="usernameAttributeProvider" class="org.jasig.services.persondir.support.SimpleUsernameAttributeProvider">
+		<property name="usernameAttribute" value="username" />
+	</bean>
+
+	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="urls">
+			<list>
+				<value>${ldap.url}</value>
+			</list>
+		</property>
+		<property name="userDn" value="${ldap.managerDn}" />
+		<property name="password" value="${ldap.managerPassword}" />
+	</bean>
+</beans>

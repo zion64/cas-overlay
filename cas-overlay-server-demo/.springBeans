@@ -16,15 +16,14 @@
 		<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/argumentExtractorsConfiguration.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/auditTrailContext.xml</config>
-		<config>src/main/webapp/WEB-INF/unused-spring-configuration/clearpass-configuration.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/filters.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/log4jConfiguration.xml</config>
-		<config>src/main/webapp/WEB-INF/unused-spring-configuration/lppe-configuration.xml</config>
-		<config>src/main/webapp/WEB-INF/unused-spring-configuration/mbeans.xml</config>
 		<config>src/main/webapp/WEB-INF/restlet-servlet.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/securityContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/uniqueIdGenerators.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/warnCookieGenerator.xml</config>
+		<config>src/main/webapp/WEB-INF/serviceRegistryDaoConfigContext.xml</config>
+		<config>src/main/webapp/WEB-INF/attributeRepositoryConfigContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
@@ -49,9 +48,6 @@
 				<config>src/main/webapp/WEB-INF/spring-configuration/securityContext.xml</config>
 				<config>src/main/webapp/WEB-INF/spring-configuration/uniqueIdGenerators.xml</config>
 				<config>src/main/webapp/WEB-INF/spring-configuration/warnCookieGenerator.xml</config>
-				<config>src/main/webapp/WEB-INF/unused-spring-configuration/clearpass-configuration.xml</config>
-				<config>src/main/webapp/WEB-INF/unused-spring-configuration/lppe-configuration.xml</config>
-				<config>src/main/webapp/WEB-INF/unused-spring-configuration/mbeans.xml</config>
 			</configs>
 			<profiles>
 			</profiles>

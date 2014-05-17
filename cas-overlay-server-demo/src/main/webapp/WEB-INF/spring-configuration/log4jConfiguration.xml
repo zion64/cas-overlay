@@ -39,6 +39,6 @@
     
     <util:list id="arguments">
        <value>${log4j.config.location:classpath:log4j.xml}</value>
-       <value>${log4j.refresh.interval:60000}</value>
+       <value>${log4j.refresh.interval:5000}</value>
     </util:list>
 </beans>
