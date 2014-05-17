@@ -49,87 +49,16 @@
 		The name of this should remain "userDetailsService" in order for Spring Security to find it.
 	-->
 	<!-- <sec:user name="@@THIS SHOULD BE REPLACED@@" password="notused" authorities="ROLE_ADMIN" /> -->
-
-    <sec:user-service id="userDetailsService" 
-                      properties="${user.details.file.location:classpath:user-details.properties}"  />
-                      
+    <sec:user-service id="userDetailsService" properties="${user.details.file.location:classpath:user-details.properties}"  />
 <!-- 	<sec:user-service id="userDetailsService"> -->
 <!-- 		<sec:user name="00010017" password="notused" authorities="ROLE_ADMIN" /> -->
 <!-- 	</sec:user-service> -->
 
 
 	<import resource="attributeRepositoryConfigContext.xml"/>
+	<import resource="serviceRegistryDaoConfigContext.xml"/>
 	
 	
-	
-	
-	
-	
-	
-	
-	<!--
-		Sample, in-memory data store for the ServiceRegistry. A real implementation
-		would probably want to replace this with the JPA-backed ServiceRegistry DAO
-		The name of this bean should remain "serviceRegistryDao".
-	-->
-    <bean id="serviceRegistryDao" class="org.jasig.cas.adaptors.ldap.services.LdapServiceRegistryDao" init-method="init"
-          p:connectionFactory-ref="pooledLdapConnectionFactory"
-          p:searchRequest-ref="searchRequest" />
-
-    <bean id="searchRequest" class="org.ldaptive.SearchRequest"
-          p:baseDn="${ldap.service.baseDn}" />
-
-    <bean id="pooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory"
-          p:connectionPool-ref="connectionPool" />
-
-    <bean id="connectionPool" class="org.ldaptive.pool.BlockingConnectionPool" init-method="initialize"
-          p:poolConfig-ref="ldapPoolConfig"
-          p:blockWaitTime="${ldap.pool.blockWaitTime}"
-          p:validator-ref="searchValidator"
-          p:pruneStrategy-ref="pruneStrategy"
-          p:connectionFactory-ref="connectionFactory" />
-
-
-    <bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig"
-          p:minPoolSize="${ldap.pool.minSize}"
-          p:maxPoolSize="${ldap.pool.maxSize}"
-          p:validateOnCheckOut="${ldap.pool.validateOnCheckout}"
-          p:validatePeriodically="${ldap.pool.validatePeriodically}"
-          p:validatePeriod="${ldap.pool.validatePeriod}" />
-
-    <bean id="connectionFactory" class="org.ldaptive.DefaultConnectionFactory"
-          p:connectionConfig-ref="connectionConfig" />
-
-    <bean id="connectionConfig" class="org.ldaptive.ConnectionConfig"
-          p:ldapUrl="${ldap.url}"
-          p:connectTimeout="${ldap.connectTimeout}"
-          p:useStartTLS="${ldap.useStartTLS}"
-          p:sslConfig-ref="sslConfig"
-          p:connectionInitializer-ref="bindConnectionInitializer"/>
-
-    <bean id="bindConnectionInitializer" class="org.ldaptive.BindConnectionInitializer"
-          p:bindDn="${ldap.managerDn}">
-        <property name="bindCredential">
-            <bean class="org.ldaptive.Credential"
-                  c:password="${ldap.managerPassword}" />
-        </property>
-    </bean>
-
-    <bean id="sslConfig" class="org.ldaptive.ssl.SslConfig">
-        <property name="credentialConfig">
-            <bean class="org.ldaptive.ssl.X509CredentialConfig"
-                  p:trustCertificates="${ldap.trustedCert}" />
-        </property>
-    </bean>
-    <bean id="pruneStrategy" class="org.ldaptive.pool.IdlePruneStrategy"
-          p:prunePeriod="${ldap.pool.prunePeriod}"
-          p:idleTime="${ldap.pool.idleTime}" />
-	<bean id="searchValidator" class="org.ldaptive.pool.SearchValidator" />
-
-
-
-
-
 
 	<bean id="auditTrailManager" class="com.github.inspektr.audit.support.Slf4jLoggingAuditTrailManager" />
 </beans>
