@@ -7,23 +7,23 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/webapp/WEB-INF/deployerConfigContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/argumentExtractorsConfiguration.xml</config>
+		<config>src/main/webapp/WEB-INF/attributeRepositoryConfigContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/auditTrailContext.xml</config>
 		<config>src/main/webapp/WEB-INF/cas-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/deployerConfigContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/filters.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/log4jConfiguration.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/propertyFileConfigurer.xml</config>
+		<config>src/main/webapp/WEB-INF/restlet-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-configuration/securityContext.xml</config>
+		<config>src/main/webapp/WEB-INF/serviceRegistryDaoConfigContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/ticketExpirationPolicies.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/ticketGrantingTicketCookieGenerator.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/ticketRegistry.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/argumentExtractorsConfiguration.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/auditTrailContext.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/filters.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/log4jConfiguration.xml</config>
-		<config>src/main/webapp/WEB-INF/restlet-servlet.xml</config>
-		<config>src/main/webapp/WEB-INF/spring-configuration/securityContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/uniqueIdGenerators.xml</config>
 		<config>src/main/webapp/WEB-INF/spring-configuration/warnCookieGenerator.xml</config>
-		<config>src/main/webapp/WEB-INF/serviceRegistryDaoConfigContext.xml</config>
-		<config>src/main/webapp/WEB-INF/attributeRepositoryConfigContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
@@ -33,21 +33,6 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
-				<config>src/main/webapp/WEB-INF/cas-servlet.xml</config>
-				<config>src/main/webapp/WEB-INF/deployerConfigContext.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/propertyFileConfigurer.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/ticketExpirationPolicies.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/ticketGrantingTicketCookieGenerator.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/ticketRegistry.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/applicationContext.xml</config>
-				<config>src/main/webapp/WEB-INF/restlet-servlet.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/argumentExtractorsConfiguration.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/auditTrailContext.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/filters.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/log4jConfiguration.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/securityContext.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/uniqueIdGenerators.xml</config>
-				<config>src/main/webapp/WEB-INF/spring-configuration/warnCookieGenerator.xml</config>
 			</configs>
 			<profiles>
 			</profiles>

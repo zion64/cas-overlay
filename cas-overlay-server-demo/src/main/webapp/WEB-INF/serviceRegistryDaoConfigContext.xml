@@ -7,21 +7,17 @@
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<!-- <bean -->
-	<!-- id="serviceRegistryDao" -->
-	<!-- class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"> -->
-	<!-- <property name="registeredServices"> -->
-	<!-- <util:list> -->
-	<!-- <bean class="org.jasig.cas.services.RegexRegisteredService" -->
-	<!-- p:id="0" p:name="HTTP and IMAP" p:description="Allows HTTP(S) and IMAP(S) protocols" -->
-	<!-- p:serviceId="^(https?|imaps?)://.*" p:evaluationOrder="10000001" /> -->
-	<!-- </util:list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
+<!-- 	<bean id="serviceRegistryDao" class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"> -->
+<!-- 		<property name="registeredServices"> -->
+<!-- 			<util:list> -->
+<!-- 				<bean class="org.jasig.cas.services.RegexRegisteredService" p:id="0" p:name="HTTP and IMAP" p:description="Allows HTTP(S) and IMAP(S) protocols" -->
+<!-- 					p:serviceId="^(https?|imaps?)://.*" p:evaluationOrder="10000001" /> -->
+<!-- 			</util:list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 	<bean id="serviceRegistryDao" class="org.jasig.cas.adaptors.ldap.services.LdapServiceRegistryDao" init-method="init" p:connectionFactory-ref="pooledLdapConnectionFactory"
 		p:searchRequest-ref="searchRequest" />
-
 	<bean id="searchRequest" class="org.ldaptive.SearchRequest" p:baseDn="${ldap.service.baseDn}" />
 
 </beans>
